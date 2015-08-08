@@ -13,7 +13,12 @@ ExoplanetColony.Boot.prototype = {
     this.input.maxPointers = 1;
 
     if (this.game.device.desktop) {
-      //  If you have any desktop specific settings, they can go in here
+      this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+      this.scale.minWidth = 1024;
+      this.scale.minHeight = 768;
+      this.scale.maxWidth = 1024;
+      this.scale.maxHeight = 768;
+      this.scale.forceLandscape = true;
       this.scale.pageAlignHorizontally = true;
     } else {
       //  1024x768
