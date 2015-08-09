@@ -1,9 +1,4 @@
-ExoplanetColony.Game = function(){};
-
-ExoplanetColony.Game.prototype = function(){
-
-    window.onload = function () {
-
+ExoplanetColony.PlayState = function(game) {
     var mapGroup;
     var imageGroup;
     var inputGroup;
@@ -13,93 +8,11 @@ ExoplanetColony.Game.prototype = function(){
 	
 	var upAro, downAro, leftAro, rightAro;
 	var objArray = [];
-	function building(xLoc, yLoc, type) {
-		this.xLoc = xLoc;
-		this.yLoc = yLoc;
-		this.type = type;
-		this.obj = undefined;
-	}
-	function move_down() {
-		if(offset[1] < 60){
-		upAro.frame = 1;
-		offset[1] += 3;
-		//console.log(offset[1]);
-		
-		offset[2] = true;
-		}
-        else if(offset[1] < 63){
-            offset[1] = 63;
-            upAro.frame = 1;
-            downAro.frame = 0;
-            offset[2] = true;
-        }
-	}
+};
 
-	function move_left() {
-		if(offset[0] >= 3){
-		rightAro.frame = 1;
-		offset[0] -= 3;
-		//console.log(offset[0]);
-		
-		offset[2] = true;
-		}
-        else if(offset[0] > 0)
-        {
-            offset[0] = 0;
-            rightAro.frame = 1;
-			leftAro.frame = 0;
-            offset[2] = true;
-		
-        }
-	}
-
-	function move_right() {
-		if(offset[0] <= 61){
-            leftAro.frame = 1;
-            offset[0] += 3;
-            console.log(offset[0]);
-            
-            offset[2] = true;
-        }
-        else if(offset[0] < 63){
-            leftAro.frame = 1;
-            offset[0] = 63;
-            rightAro.frame = 0;
-            offset[2] = true;
-        }
-	}
-
-	function move_up() {
-		if(offset[1] >= 4){
-		downAro.frame = 1;
-		offset[1] -= 3;
-		//console.log(offset[1]);
-		
-		offset[2] = true;
-		}
-        else if(offset[1] > 0){
-            offset[1] = 0;
-            downAro.frame = 1;
-            upArow.frame = 0;
-            offset[2] = true;
-        }
-		
-	}
-    
-    function onClickMap(sprite, pointer) {
-        console.log(Math.floor(pointer.position.x / (199/3)), Math.floor(pointer.position.y/(199/3)));
-        for(i = 0; i < objArray[objArray.length]; i++){
-            if(objArray[i].xLoc == Math.floor(pointer.position.x / (199/3)) + offset[0]){
-                if(objArray[i].yLoc = Math.floor(pointer.position.y / (199/3)) + offset[1]){   
-                    return;
-                }
-            }
-        }
-        objArray[objArray.length] = new building(Math.floor(pointer.position.x / (199/3)) + offset[0], Math.floor(pointer.position.y/(199/3)) + offset[1] ,typeList[(pointer.position.x + pointer.position.y) % 5]);
-        objArray[objArray.length - 1].obj = game.add.sprite(((objArray[objArray.length - 1].xLoc - offset[0])* (199/3)) + 1, ((objArray[objArray.length - 1].yLoc - offset[1]) * 199/3) + 1, objArray[objArray.length - 1].type, imageGroup);
-    }
-    
-	function preload() {
+ExoplanetColony.PlayState.prototype = {
+       
+	preload: function() {
 		game.load.image('bgtile', 'assets/images/bgtile.bmp');
 		game.load.image('build001', 'assets/images/building001.png');
 		game.load.image('build002', 'assets/images/building002.png');
@@ -108,9 +21,8 @@ ExoplanetColony.Game.prototype = function(){
 		game.load.image('build006', 'assets/images/building006.png');
 		game.load.spritesheet('arrow', 'assets/images/arrow_spritesheet.png', 64, 64, 64,0, 0);
 		//game.load.image('arrow_defunct', 'assets/images/arrow_defunct.png');
-	}
-
-	function create () {
+	},    
+	create: function () {
 	    //var objArray = [new building(0,0,typeList[0]), new building(3,2,typeList[2]), new building(8,6, typeList[1])];.
         
 	    /*for(i = 0; i < 12; i++){
@@ -185,20 +97,100 @@ drawnObject.anchor.setTo(0.5, 0.5);
 	    rightAro.frame = 1;
 	    rightAro.anchor.setTo(0.5, 0.5);
 	    rightAro.angle = (90);
-	}
-	
-	
+	},
+    update: function() {
+	   if(offset[2]){
+           for (i = 0; i < objArray.length; i++){
+               objArray[i].obj.x = ((objArray[i].xLoc - offset[0]) * (199/3)) + 1;
+               objArray[i].obj.y = ((objArray[i].yLoc - offset[1]) * (199/3)) + 1;
+           }
+           offset[2] = false;
+       }
+    },
 
-	function update() {
-	if(offset[2]){
-	    for (i = 0; i < objArray.length; i++){
-		objArray[i].obj.x = ((objArray[i].xLoc - offset[0]) * (199/3)) + 1;
-		objArray[i].obj.y = ((objArray[i].yLoc - offset[1]) * (199/3)) + 1;
+	building: function(xLoc, yLoc, type) {
+		this.xLoc = xLoc;
+		this.yLoc = yLoc;
+		this.type = type;
+		this.obj = undefined;
+	},
+	move_down: function() {
+		if(offset[1] < 60){
+		upAro.frame = 1;
+		offset[1] += 3;
+		//console.log(offset[1]);
 		
-	    }
-	    offset[2] = false;
-	}		
-	}
+		offset[2] = true;
+		}
+        else if(offset[1] < 63){
+            offset[1] = 63;
+            upAro.frame = 1;
+            downAro.frame = 0;
+            offset[2] = true;
+        }
+	},
+
+	move_left: function() {
+		if(offset[0] >= 3){
+            rightAro.frame = 1;
+            offset[0] -= 3;
+            //console.log(offset[0]);
+            offset[2] = true;
+        }
+        else if(offset[0] > 0)
+        {
+            offset[0] = 0;
+            rightAro.frame = 1;
+			leftAro.frame = 0;
+            offset[2] = true;
+		
+        }
+	},
+
+	move_right: function() {
+		if(offset[0] <= 61){
+            leftAro.frame = 1;
+            offset[0] += 3;
+            console.log(offset[0]);
+            
+            offset[2] = true;
+        }
+        else if(offset[0] < 63){
+            leftAro.frame = 1;
+            offset[0] = 63;
+            rightAro.frame = 0;
+            offset[2] = true;
+        }
+	},
+
+	move_up: function() {
+		if(offset[1] >= 4){
+		downAro.frame = 1;
+		offset[1] -= 3;
+		//console.log(offset[1]);
+		
+		offset[2] = true;
+		}
+        else if(offset[1] > 0){
+            offset[1] = 0;
+            downAro.frame = 1;
+            upArow.frame = 0;
+            offset[2] = true;
+        }
+		
+	},
+    
+    onClickMap: function(sprite, pointer) {
+        console.log(Math.floor(pointer.position.x / (199/3)), Math.floor(pointer.position.y/(199/3)));
+        for(i = 0; i < objArray[objArray.length]; i++){
+            if(objArray[i].xLoc == Math.floor(pointer.position.x / (199/3)) + offset[0]){
+                if(objArray[i].yLoc = Math.floor(pointer.position.y / (199/3)) + offset[1]){   
+                    return;
+                }
+            }
+        }
+        objArray[objArray.length] = new building(Math.floor(pointer.position.x / (199/3)) + offset[0], Math.floor(pointer.position.y/(199/3)) + offset[1] ,typeList[(pointer.position.x + pointer.position.y) % 5]);
+        objArray[objArray.length - 1].obj = game.add.sprite(((objArray[objArray.length - 1].xLoc - offset[0])* (199/3)) + 1, ((objArray[objArray.length - 1].yLoc - offset[1]) * 199/3) + 1, objArray[objArray.length - 1].type, imageGroup);
+    }
 	
-}
 };

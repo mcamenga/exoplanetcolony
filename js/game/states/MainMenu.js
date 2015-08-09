@@ -1,4 +1,4 @@
-ExoplanetColony.MainMenu = function() {};
+ExoplanetColony.MainMenu = function(game) {};
 
 ExoplanetColony.MainMenu.prototype = {
     
@@ -24,7 +24,7 @@ ExoplanetColony.MainMenu.prototype = {
     
  startButtonClicked: function() {
     //gamestart
-    this.state.start('Game');
+    this.state.start('PlayState');
     },
 aboutButtonClicked: function() {
     this.state.start('About');
