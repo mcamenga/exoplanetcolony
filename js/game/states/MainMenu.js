@@ -24,7 +24,7 @@ ExoplanetColony.MainMenu.prototype = {
     
  startButtonClicked: function() {
     //gamestart
-    console.log('start');
+    this.state.start('Game');
     },
 aboutButtonClicked: function() {
     this.state.start('About');
