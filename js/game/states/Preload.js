@@ -14,6 +14,7 @@ ExoplanetColony.Preload.prototype = {
     this.load.image('startButton', 'assets/images/startbtn.png');
     this.load.image('aboutButton', 'assets/images/aboutbtn.png');
     this.load.image('howtoplayButton', 'assets/images/howtoplaybtn.png');
+    this.load.image('backButton', 'assets/images/backbtn.png');
     //this.load.spritesheet(XX);
     //this.load.audio('music');
     //this.load.bitmapFont();
