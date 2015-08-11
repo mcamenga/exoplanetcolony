@@ -15,6 +15,15 @@ ExoplanetColony.Preload.prototype = {
     this.load.image('aboutButton', 'assets/images/aboutbtn.png');
     this.load.image('howtoplayButton', 'assets/images/howtoplaybtn.png');
     this.load.image('backButton', 'assets/images/backbtn.png');
+      
+      this.load.image('bgtile', 'assets/images/bgtile.bmp');
+        this.load.image('selecttile', 'assets/images/selectpanel.bmp');
+		this.load.image('build001', 'assets/images/building001.png');
+		this.load.image('build002', 'assets/images/building002.png');
+		this.load.image('build003', 'assets/images/building003.png');
+		this.load.image('build005', 'assets/images/building005.png');
+		this.load.image('build006', 'assets/images/building006.png');
+		this.load.spritesheet('arrow', 'assets/images/arrow_spritesheet.png', 64, 64, 64,0, 0);
     //this.load.spritesheet(XX);
     //this.load.audio('music');
     //this.load.bitmapFont();
